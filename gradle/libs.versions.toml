@@ -1,11 +1,11 @@
 [versions]
-build-java-compile = "21"
+build-java-compile = "17"
 build-java-target = "11"
 build-android-min-sdk = "29"
 build-android-compile-sdk = "34"
 build-android-target-sdk = "34"
 activityCompose = "1.9.1"
-composeBom = "2024.06.00"
+composeBom = "2024.08.00"
 kotlin = "2.0.10"
 lifecycleViewmodelCompose = "2.8.4"
 coroutines = "1.8.1"
