@@ -1,0 +1,25 @@
+plugins {
+    id("com.toptal.library.kotlin")
+    alias(libs.plugins.apollo.gradle)
+    alias(libs.plugins.google.ksp)
+}
+
+apollo {
+    service("service") {
+        packageName.set("com.toptal.graphql")
+    }
+}
+
+dependencies {
+    api(projects.data.networking.api)
+    api(libs.coroutines.core)
+    implementation(libs.bundles.apollo)
+    implementation(libs.okhttp.okhttp)
+    implementation(libs.dagger.core)
+    ksp(libs.dagger.compiler)
+
+    testImplementation(libs.okhttp.mockwebserver)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.junit4.core)
+    testImplementation(libs.assertj.core)
+}

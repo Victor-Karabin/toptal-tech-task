@@ -1,0 +1,9 @@
+plugins {
+  id("com.toptal.library.kotlin")
+  alias(libs.plugins.compose.compiler)
+}
+
+dependencies {
+  implementation(platform(libs.compose.bom))
+  api(libs.compose.runtime)
+}

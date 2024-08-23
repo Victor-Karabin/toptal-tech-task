@@ -1,0 +1,13 @@
+plugins {
+    id("com.gradleup.auto.manifest") version("2.0")
+    alias(libs.plugins.compose.compiler) apply(false)
+    alias(libs.plugins.apollo.gradle) apply(false)
+    alias(libs.plugins.google.ksp) apply(false)
+    id("com.toptal.library.kotlin") apply(false)
+    id("com.toptal.library.android") apply(false)
+    id("com.toptal.app.android") apply(false)
+}
+
+autoManifest {
+    packageName.set("com.toptal.github")
+}

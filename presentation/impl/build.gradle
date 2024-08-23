@@ -1,0 +1,33 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id("com.toptal.library.android")
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.google.ksp)
+}
+
+android {
+    buildFeatures.compose true
+}
+
+tasks.withType(KotlinCompile).configureEach {
+    compilerOptions {
+        freeCompilerArgs.add("-opt-in=androidx.compose.material3.ExperimentalMaterial3Api")
+    }
+}
+
+dependencies {
+    implementation(platform(libs.compose.bom))
+    androidTestImplementation(platform(libs.compose.bom))
+    api(projects.presentation.api)
+    implementation(libs.material3)
+    implementation(libs.activity.compose)
+    api(libs.lifecycle.viewmodel.compose)
+    implementation(libs.coroutines.android)
+    implementation(libs.ui.tooling.preview)
+
+    debugImplementation(libs.ui.tooling)
+    debugImplementation(libs.ui.test.manifest)
+
+    androidTestImplementation(libs.ui.test.junit4)
+}

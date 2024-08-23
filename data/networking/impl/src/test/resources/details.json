@@ -1,0 +1,10 @@
+{
+  "data": {
+    "repository": {
+      "__typename": "Repository",
+      "id": "MDEwOlJlcG9zaXRvcnkxMDYyODk3",
+      "name": "gitignore",
+      "url": "https://github.com/toptal/gitignore"
+    }
+  }
+}

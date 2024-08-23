@@ -1,0 +1,39 @@
+import org.gradle.kotlin.dsl.ProjectExtensionsKt
+
+plugins {
+    id("java-gradle-plugin")
+    alias(libs.plugins.kotlin.sam.with.receiver)
+    alias(libs.plugins.kotlin.jvm)
+}
+
+samWithReceiver {
+    annotation("org.gradle.api.HasImplicitReceiver")
+}
+
+kotlin {
+    jvmToolchain(libs.versions.build.java.compile.get().toInteger())
+}
+
+dependencies {
+    implementation(ProjectExtensionsKt.gradleKotlinDsl(project))
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin")
+    implementation(gradleApi())
+    implementation(libs.android.gradle)
+}
+
+gradlePlugin {
+    plugins {
+        androidLibPlugin {
+            id = "com.toptal.library.android"
+            implementationClass = "com.toptal.plugins.LibraryPlugin"
+        }
+        kotlinLibPlugin {
+            id = "com.toptal.library.kotlin"
+            implementationClass = "com.toptal.plugins.KotlinPlugin"
+        }
+        applicationPlugin {
+            id = "com.toptal.app.android"
+            implementationClass = "com.toptal.plugins.ApplicationPlugin"
+        }
+    }
+}
