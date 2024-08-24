@@ -45,7 +45,7 @@ class RepositoriesListViewModel(
     private companion object {
 
         private val TAG = RepositoriesListViewModel::class.java.name
-        private const val OWNER = "Victor-Karabin"
+        private const val OWNER = "toptal"
         private const val LIMIT = 40
     }
 }
