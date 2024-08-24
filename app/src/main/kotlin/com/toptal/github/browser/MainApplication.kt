@@ -8,15 +8,17 @@ import dagger.android.support.DaggerApplication
 
 internal class MainApplication : DaggerApplication() {
 
-    private fun networkingComponent() = DaggerNetworkingComponent.factory().create(
-        config = GithubConfig(
-            token = BuildConfig.GITHUB_TOKEN,
-            url = BuildConfig.GITHUB_API,
-        ),
-    )
+    internal val networkingComponent by lazy {
+        DaggerNetworkingComponent.factory().create(
+            config = GithubConfig(
+                token = BuildConfig.GITHUB_TOKEN,
+                url = BuildConfig.GITHUB_API,
+            ),
+        )
+    }
 
     override fun applicationInjector(): AndroidInjector<MainApplication> = DaggerMainComponent.factory().create(
         application = this,
-        networkingComponent = networkingComponent(),
+        networkingComponent = networkingComponent,
     )
 }

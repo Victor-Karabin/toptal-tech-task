@@ -17,46 +17,59 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun RepositoriesListRoot(
     modifier: Modifier = Modifier,
-    viewModel: RepositoriesListViewModel = viewModel(),
+    viewModel: RepositoriesListViewModel,
+    onNavigateDetails: (String, String) -> Unit,
 ) {
-    val state by viewModel.list.collectAsState()
+    LaunchedEffect(Unit) {
+        viewModel.fetchRepos()
+    }
 
-    RepositoriesListRoot(modifier = modifier, model = state)
+    val state by viewModel.state.collectAsState()
+
+    RepositoriesListRoot(
+        modifier = modifier,
+        model = state,
+        onClickItem = { item -> onNavigateDetails(item.id, item.name) },
+    )
 }
 
 @Composable
 private fun RepositoriesListRoot(
     modifier: Modifier = Modifier,
     model: UiRepositoryList?,
+    onClickItem: (UiRepositoryItem.Repository) -> Unit,
 ) {
-    model ?: return
-
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "Repositories") },
-            )
-        },
-        contentWindowInsets = WindowInsets.systemBars,
-    ) { innerPadding ->
-        LazyColumn(
-            modifier = Modifier.consumeWindowInsets(innerPadding),
-            contentPadding = innerPadding,
-        ) {
-            items(model.items) {
-                ListItem(model = it)
+    if (model != null) {
+        Scaffold(
+            modifier = modifier,
+            topBar = {
+                TopAppBar(
+                    title = { Text(text = "Repositories") },
+                )
+            },
+            contentWindowInsets = WindowInsets.systemBars,
+        ) { innerPadding ->
+            LazyColumn(
+                modifier = Modifier.consumeWindowInsets(innerPadding),
+                contentPadding = innerPadding,
+            ) {
+                items(model.items) {
+                    ListItem(
+                        model = it,
+                        onClickItem = onClickItem,
+                    )
+                }
             }
         }
     }
@@ -65,12 +78,17 @@ private fun RepositoriesListRoot(
 @Composable
 private fun ListItem(
     model: UiRepositoryItem,
+    onClickItem: (UiRepositoryItem.Repository) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (model) {
         is UiRepositoryItem.Error -> ErrorItem(modifier = modifier, model = model)
         UiRepositoryItem.Progress -> ProgressItem(modifier = modifier)
-        is UiRepositoryItem.Repository -> RepoItem(modifier = modifier, model = model)
+        is UiRepositoryItem.Repository -> RepoItem(
+            modifier = modifier,
+            model = model,
+            onClickItem = { onClickItem(model) },
+        )
     }
 }
 
@@ -109,11 +127,12 @@ private fun ProgressItem(modifier: Modifier) {
 @Composable
 private fun RepoItem(
     model: UiRepositoryItem.Repository,
-    modifier: Modifier,
+    onClickItem: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-        onClick = model.onClicked,
+        onClick = onClickItem,
     ) {
         Column(
             modifier = Modifier
@@ -136,9 +155,9 @@ private fun RepositoriesListPreview() {
                 addAll(
                     List(5) {
                         UiRepositoryItem.Repository(
+                            id = it.toString(),
                             name = "index=$it",
                             url = "fixture-url",
-                            onClicked = { },
                         )
                     },
                 )
@@ -147,5 +166,6 @@ private fun RepositoriesListPreview() {
                 add(UiRepositoryItem.Progress)
             },
         ),
+        onClickItem = {},
     )
 }

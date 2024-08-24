@@ -1,5 +1,6 @@
 plugins {
     id("com.toptal.app.android")
+    alias(libs.plugins.compose.compiler) // navigation
     alias(libs.plugins.google.ksp)
 }
 
@@ -13,9 +14,8 @@ android {
         buildConfigField "String", "GITHUB_API", "\"https://api.github.com/graphql\""
     }
 
-    buildFeatures {
-        buildConfig = true
-    }
+    buildFeatures.buildConfig true
+    buildFeatures.compose true
 
     buildTypes {
         named("debug") {
@@ -40,6 +40,10 @@ dependencies {
     implementation(libs.dagger.android.support)
     ksp(libs.dagger.compiler)
     ksp(libs.dagger.compiler.android)
+    implementation(libs.compose.runtime)
+    implementation(libs.navigation.runtime)
+    implementation(libs.compose.navigation)
+    implementation(libs.activity.compose)
 }
 
 private String findGithubToken() {

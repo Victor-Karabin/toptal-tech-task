@@ -1,7 +1,31 @@
-query RepositoryDetails($owner: String!, $name:String!) {
-    repository(owner:$owner, name:$name) {
-        id
-        name
-        url
+query RepositoryDetails($repoId: ID!, $issuesLimit: Int!, $prsLimit: Int!) {
+    node(id: $repoId) {
+        ... on Repository {
+            name
+            issues(first: $issuesLimit) {
+                nodes {
+                    title
+                    state
+                }
+            }
+            pullRequests(first: $prsLimit) {
+                nodes {
+                    title
+                    state
+                }
+            }
+        }
+    }
+}
+
+query GetUserRepositories($username: String!, $first: Int!) {
+    user(login: $username) {
+        repositories(first: $first) {
+            nodes {
+                id
+                name
+                url
+            }
+        }
     }
 }

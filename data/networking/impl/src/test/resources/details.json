@@ -4,7 +4,31 @@
       "__typename": "Repository",
       "id": "MDEwOlJlcG9zaXRvcnkxMDYyODk3",
       "name": "gitignore",
-      "url": "https://github.com/toptal/gitignore"
+      "url": "https://github.com/toptal/gitignore",
+      "issues": {
+        "nodes": [
+          {
+            "title": "Open Issue 1",
+            "state": "OPEN"
+          },
+          {
+            "title": "Closed Issue 1",
+            "state": "CLOSED"
+          }
+        ]
+      },
+      "pullRequests": {
+        "nodes": [
+          {
+            "title": "Open PR 1",
+            "state": "OPEN"
+          },
+          {
+            "title": "Closed PR 1",
+            "state": "CLOSED"
+          }
+        ]
+      }
     }
   }
 }

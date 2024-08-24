@@ -11,8 +11,8 @@ sealed class UiRepositoryItem {
     data class Error(val onRetryClicked: () -> Unit) : UiRepositoryItem()
 
     data class Repository(
+        val id: String,
         val name: String,
         val url: String,
-        val onClicked: () -> Unit,
     ) : UiRepositoryItem()
 }

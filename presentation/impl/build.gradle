@@ -20,6 +20,7 @@ dependencies {
     implementation(platform(libs.compose.bom))
     androidTestImplementation(platform(libs.compose.bom))
     api(projects.presentation.api)
+    api(projects.data.networking.api)
     implementation(libs.material3)
     implementation(libs.activity.compose)
     api(libs.lifecycle.viewmodel.compose)

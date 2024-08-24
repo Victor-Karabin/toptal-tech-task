@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
+    <string name="common_back">Back</string>
 
     <!-- Listing -->
     <string name="list_title">Browse</string>
@@ -8,6 +9,7 @@
 
     <!-- Details -->
     <string name="details_loading_error">Error while loading data.</string>
+    <string name="opened_titles">Opened titles</string>
     <string name="issues">Issues</string>
     <string name="opened_issues_count">%d Opened</string>
     <string name="closed_issues_count">%d Closed</string>
